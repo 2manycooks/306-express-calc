@@ -1,3 +1,4 @@
+const e = require('express')
 const express = require('express')
 
 const app = express()
@@ -50,3 +51,39 @@ app.get('/divide/:x/:y', (req, res) => {
 
 // bonus
 
+app.get("/*", (req, res) => {
+    let numsArray = req.params["0"].split("/")
+    numsArray.pop()
+
+    if (req.query.math === "add") {
+        let result = 0
+        for (num of numsArray) {
+            result += parseInt(num)
+        }
+        res.send(`The result is ${result}`)
+    } else if (req.query.math === "subtract") {
+        let result = parseInt(numsArray[0])
+        for (num of numsArray) {
+            result -= parseInt(num)
+        }
+        result += parseInt(numsArray[0])
+        res.send(`The result is ${result}`)
+
+    } else if (req.query.math === "multiply") {
+        let result = 1
+        for (num of numsArray) {
+            result *= parseInt(num)
+        }
+        res.send(`The result is ${result}`)
+    } else if (req.query.math === "divide") {
+        let result = parseInt(numsArray[0])
+        for (num of numsArray) {
+            result /= parseInt(num)
+        }
+        result *= parseInt(numsArray[0])
+        res.send(`The result is ${result}`)
+    } else {
+        res.send(req.params)
+        console.log(req.query)
+    }
+})
